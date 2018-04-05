@@ -1,0 +1,70 @@
+ {% extends "base.html" %} {% load blog_tags %} {% block content %}
+<div class="content">
+    <header class="article-header">
+        <h1 class="article-title"><a href="#">{{ article.title }}</a></h1>
+        <div class="article-meta ">
+            <span class="item category"><a href="# ">{{ article.category }}</a></span>
+            <span class="item time ">{{ article.created_time }}</span>
+            <span class="item tags">标签：<a href="#">架构</a><a href="#">架构</a><a href="#">架构</a></span>
+            <span class="item views"><i class="glyphicon glyphicon-eye-open"></i> {{ article.views }}</span>
+        </div>
+    </header>
+
+    <article class="article-content">
+        <p>{{ article.body|safe }}</p>
+    </article>
+    <!-- 
+    <div class="title">
+        <h3>评论</h3>
+    </div>
+    <div class="article-comment">
+        <form action="" method="POST">
+            <input type="text" class="form-control" placeholder="您的昵称（必填）">
+            <input type="text" class="form-control" placeholder="您的邮箱或联系电话（非必填）">
+            <textarea class="form-control" rows="3" placeholder="您的评论或留言（必填）"></textarea>
+            <button type="button" class="btn btn-default">发布评论</button>
+        </form>
+    </div>
+
+    <div class="postcomments">
+        <ol class="commentlist">
+            <li class="comment-content"><span class="comment-f">#2</span>
+                <div class="comment-main">
+                    <p><a class="name" href="#" target="_blank">zx@reedo.cn</a><span class="time"> 2016/10/28 11:41:03</span><br>不错的网站主题，看着相当舒服</p>
+                </div>
+            </li>
+            <li class="comment-content"><span class="comment-f">#2</span>
+                <div class="comment-main">
+                    <p><a class="name" href="#" target="_blank">九日</a><span class="time"> 2016/10/28 11:41:03</span><br>不错的网站主题，看着相当舒服</p>
+                </div>
+            </li>
+        </ol>
+    </div> -->
+</div>
+{% endblock content %} {% block sidebar %}
+<div class="sidebar ">
+    <div class="widget widget_hot">
+        <h3>文章目录</h3>
+        {{ article.toc|safe }}
+        <!-- <ul>
+            <li><a title="" href="#"><span class="text">如何绘制产品架构图</span></a></li>
+            <li><a title="" href="#"><span class="text">如何绘制产品架构图</span></a></li>
+        </ul> -->
+    </div>
+    <div class="widget widget_hot ">
+        <h3>最新文章</h3>
+        <ul>
+            {% get_recent_articles as recent_article_list %} {% for article in recent_article_list %}
+            <li>
+                <a title="" href="{% url 'blog:detail' article.pk  %}">
+                    <span class="text">{{ article.title }}</span>
+                    <span class="muted"><i class="glyphicon glyphicon-time"></i>{{ article.created_time }}</span>
+                    <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> {{ article.views }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+{% endblock sidebar %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}{% load blog_tags %} {% block title %} Reedo-首页 {% endblock title %} {% block intro %}
+<div class="introBanner">
+    <h3>Reedo</h3>
+    <p>有意义的想法，值得全情兑现！</p>
+</div>
+{% endblock intro %} {% block content %}
+<div class="content">
+    <div class="title">
+        <h3>最新发布</h3>
+        <!-- <div class="more">
+            <a href="#">产品</a>
+            <a href="#">技术</a>
+            <a href="#">生活笔记</a>
+        </div> -->
+    </div>
+    {% for article in article_list %}
+    <div class="excerpt">
+        <header>
+            <a class="cat" href="{% url 'blog:category' article.category.pk %}">{{ article.category }}<i></i></a>
+            <h2><a href="{% url 'blog:detail' article.pk %}">{{ article.title }}</a></h2>
+        </header>
+        <p>{{ article.abstract }}</p>
+        <p class="meta">
+            <a class="category" href="{% url 'blog:category' article.category.pk %}"><i class="glyphicon glyphicon-folder-open"></i> {{ article.category }}</a>
+            <a class="time" href="#"><i class="glyphicon glyphicon-time"></i> {{ article.created_time }}</a>
+            <a class="views" href="#"><i class="glyphicon glyphicon-eye-open"></i> {{ article.views }}</a>
+            <!-- <a class="comment" href="#"><i class="glyphicon glyphicon-comment"></i> {{ article.views }}</a> -->
+        </p>
+    </div>
+    {% empty%}
+    <div class="excerpt">
+        <p>============================================ 还没有文章 ============================================</p>
+    </div>
+    {% endfor %}
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock content %} {% block sidebar %}
+<div class="sidebar">
+    <div class="widget widget_hot">
+        <h3>最新文章</h3>
+        <ul>
+            {% get_recent_articles as recent_article_list %} {% for article in recent_article_list %}
+            <li>
+                <a title="" href="{% url 'blog:detail' article.pk  %}">
+                    <span class="text">{{ article.title }}</span>
+                    <span class="muted"><i class="glyphicon glyphicon-time"></i>{{ article.created_time }}</span>
+                    <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> {{ article.views }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="widget widget_category">
+        <h3>文章分类</h3>
+        <ul>
+            {% get_categories as category_list %} {% for category in category_list %}
+            <li><a href="{% url 'blog:category' category.pk %}"><span class="text"><i class="glyphicon glyphicon-triangle-right"></i> {{ category.name }}</span><span class="count">{{ category.num_article }}篇</span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="widget">
+        <h3>归档</h3>
+        <ul>
+            {% archives as date_list %} {% for date in date_list %}
+            <li><a href="{% url 'blog:archives' date.year date.month %}"><span class="text"><i class="glyphicon glyphicon-play-circle"></i>  {{ date.year }}年{{ date.month }}月</span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- <div class="widget widget_sentence">
+        <h3>标签云</h3>
+        <ul>
+            <li><a href="#">移动 <span class="badge">1</span></a></li>
+            <li><a href="#">产品 <span class="badge">1</span></a></li>
+            <li><a href="#">移动统计 <span class="badge">1</span></a></li>
+            <li><a href="#">移动统计 <span class="badge">1</span></a></li>
+            <li><a href="#">移动统计 <span class="badge">1</span></a></li>
+        </ul>
+    </div> -->
+</div>
+{% endblock sidebar %}
